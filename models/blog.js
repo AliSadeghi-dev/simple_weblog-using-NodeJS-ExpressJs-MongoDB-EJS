@@ -1,4 +1,6 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+
+const { schema } = require("./secure/postValidation");
 
 const blogSchema = new mongoose.Schema({
     title: {
@@ -6,16 +8,16 @@ const blogSchema = new mongoose.Schema({
         required: true,
         trim: true,
         minlength: 5,
-        maxlength: 255
+        maxlength: 255,
     },
     body: {
         type: String,
-        required: true
+        required: true,
     },
     status: {
         type: String,
         default: "عمومی",
-        enum: ["عمومی", "خصوصی"]
+        enum: ["عمومی", "خصوصی"],
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
@@ -23,9 +25,12 @@ const blogSchema = new mongoose.Schema({
     },
     createdAt: {
         type: Date,
-        default: Date.now
+        default: Date.now,
+    },
+});
 
-    }
-})
+blogSchema.statics.postValidation = function(body) {
+    return schema.validate(body, { abortEarly: false });
+};
 
-module.exports = mongoose.model("Blog", blogSchema)
+module.exports = mongoose.model("Blog", blogSchema);

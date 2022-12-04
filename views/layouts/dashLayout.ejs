@@ -28,6 +28,7 @@
     </style>
     <link href="/css/dashboard.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.20.1/ckeditor.js" integrity="sha512-zFNDGGU5T3I464vTJn5SupfBJEoxFa7oa5BRkQjm409ORBe1U4f7cpbylDdV21yrmjmYKo3Y0sPTxR9kBgSkvQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body class="rtl">
@@ -40,6 +41,11 @@
                         <%- body %>
                     </main>
             </div>
+            <script>
+                CKEDITOR.replace("body", {
+                    language: "fa"
+                })
+            </script>
             <script src="/js/jquery.slim.min.js"></script>
             <script src="/js/bootstrap.bundle.min.js"></script>
 </body>

@@ -25,6 +25,8 @@
     "express-ejs-layouts": "^2.5.1",
     "express-session": "^1.17.3",
     "font-awesome": "^4.7.0",
+    "jalali-moment": "^3.3.11",
+    "moment-jalali": "^0.3.9",
     "mongoose": "^6.7.2",
     "morgan": "^1.10.0",
     "node-fetch": "^3.3.0",
@@ -36,10 +38,10 @@
     "cross-env": "^7.0.3"
   },
   "consumedServices": {
-  "autosave": {
-    "versions": {
-      "1.0.0": "consumeAutosave"
+    "autosave": {
+      "versions": {
+        "1.0.0": "consumeAutosave"
+      }
     }
   }
-}
 }
