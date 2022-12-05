@@ -5,9 +5,16 @@ document.getElementById("imageUpload").onclick = function() {
     const imageStatus = document.getElementById("imageStatus");
     const progressDiv = document.getElementById("progressDiv");
     const progressBar = document.getElementById("progressBar");
+    const uploadResult = document.getElementById("uploadResult");
 
     xhhtp.onreadystatechange = function() {
-        imageStatus.innerHTML = this.responseText;
+        if (xhhtp.status === 200) {
+            imageStatus.innerHTML = "آپلود عکس موفقیت آمیز بود.";
+            uploadResult.innerHTML = this.responseText;
+            selectedImage.value = "";
+        } else {
+            imageStatus.innerHTML = this.responseText;
+        }
     };
     xhhtp.open("POST", "/dashboard/image-upload");
     xhhtp.upload.onprogress = function(e) {
