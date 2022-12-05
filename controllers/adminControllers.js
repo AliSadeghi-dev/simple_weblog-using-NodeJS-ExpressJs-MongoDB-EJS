@@ -1,6 +1,8 @@
 const Blog = require("../models/blog");
 const { formatDate } = require("../utils/jalaliMoment");
 const { get500 } = require("./errorController");
+const { fileFilter, storage } = require("../utils/multer");
+const multer = require("multer");
 
 exports.getDashboard = async(req, res) => {
     try {
@@ -24,7 +26,7 @@ exports.getAddPost = async(req, res) => {
         pageTitle: "بخش مدیریت |پست جدید",
         path: "/dashboard/add-post",
         layout: "./layouts/dashLayout",
-        fullname: req.user.fullname, 
+        fullname: req.user.fullname,
     });
 };
 
@@ -50,4 +52,27 @@ exports.CreatePost = async(req, res) => {
             errors: errorArr,
         });
     }
+};
+
+exports.uploadImage = (req, res) => {
+    // let filename = `${uuid()}.jpg`;
+    const upload = multer({
+        limits: { fileSize: 4000000 },
+        dest: "uploads/",
+        storage: storage,
+        fileFilter: fileFilter,
+    }).single("image");
+
+    upload(req, res, (err) => {
+        if (err) {
+            console.log(err);
+            res.send(err);
+        } else {
+            if (req.file) {
+                res.status(200).send("آپلود عکس موفقیت آمیز بود.");
+            } else {
+                res.send("جهت آپلود عکسی را انتخاب کنید.");
+            }
+        }
+    });
 };
