@@ -4,6 +4,9 @@ const { get500 } = require("./errorController");
 const { fileFilter, storage } = require("../utils/multer");
 const multer = require("multer");
 const uuid = require("uuid").v4;
+const appRoot = require("app-root-path");
+const shortid = require("shortid");
+const sharp = require("sharp");
 
 exports.getDashboard = async(req, res) => {
     try {
@@ -103,9 +106,23 @@ exports.deletePost = async(req, res) => {
 
 exports.CreatePost = async(req, res) => {
     const errorArr = [];
+
+    const thumbnail = req.files ? req.files.thumbnail : {};
+    const fileName = `${shortid.generate()}_${thumbnail.name}`;
+    const uploadPath = `${appRoot}/public/uploads/thumbnails/${fileName}`;
+    console.log(thumbnail);
+
     try {
+        req.body = {...req.body, thumbnail };
+        console.log(req.body);
         await Blog.postValidation(req.body);
-        Blog.create({...req.body, user: req.user.id });
+
+        await sharp(thumbnail.data)
+            .jpeg({ quality: 60 })
+            .toFile(uploadPath)
+            .catch((err) => console.log(err));
+
+        Blog.create({...req.body, user: req.user.id, thumbnail: fileName });
         res.redirect("/dashboard");
     } catch (err) {
         console.log(err);

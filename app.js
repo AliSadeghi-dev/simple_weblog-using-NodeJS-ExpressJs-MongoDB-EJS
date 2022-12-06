@@ -11,6 +11,7 @@ const expressLayout = require("express-ejs-layouts");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
+const fileUpload = require("express-fileupload");
 
 const indexRoutes = require("./routes/blog");
 const dashRoutes = require("./routes/dashboard");
@@ -43,7 +44,7 @@ app.set("views", "views");
 //*bodyParser
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(bodyParser.json());
+app.use(fileUpload());
 
 //* session
 app.use(
