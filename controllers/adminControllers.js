@@ -170,3 +170,23 @@ exports.uploadImage = (req, res) => {
         }
     });
 };
+
+exports.handleSearch = async(req, res) => {
+    try {
+        const blogs = await Blog.find({
+            user: req.user.id,
+            $text: { $search: req.body.search },
+        });
+        res.render("private/blogs", {
+            pageTitle: "بخش مدیریت ",
+            path: "/dashboard",
+            layout: "./layouts/dashLayout",
+            fullname: req.user.fullname,
+            blogs,
+            formatDate,
+        });
+    } catch (err) {
+        console.log(err);
+        get500(req, res);
+    }
+};

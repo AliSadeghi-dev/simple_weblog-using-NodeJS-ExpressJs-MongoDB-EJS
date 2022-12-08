@@ -16,4 +16,6 @@ router.post("/edit-post/:id", authenticated, adminController.editPost);
 //* POST handle image upload  dashboard/image-upload
 router.post("/image-upload", authenticated, adminController.uploadImage);
 
+router.post("/search", authenticated, adminController.handleSearch);
+
 module.exports = router;

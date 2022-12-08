@@ -7,4 +7,8 @@ router.get("/", blogController.getIndex);
 
 router.get("/post/:id", blogController.getSinglePost);
 
+router.get("/contact", blogController.getContactPage);
+
+router.post("/search", blogController.handleSearch);
+
 module.exports = router;
